@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weater App</title>
+    <style>
+        div {
+            text-align: center;
+            padding: 10%;
+        }
+
+        body {
+            color: white;
+            background-color: rgb(63, 60, 60);
+        }
+
+        h1 {
+            font-size: 450%;
+        }
+
+        button {
+            background-color: #44c767;
+            border-radius: 28px;
+            border: 1px solid #18ab29;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-size: 17px;
+            padding: 16px 31px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #2f6627;
+
+        }
+
+        Button:hover {
+            background-color: #5cbf2a;
+        }
+
+        Button:active {
+            position: relative;
+            top: 1px;
+        }
+
+        input {
+            width: 35%;
+        }
+
+        p {
+            font-size: 200%;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Previsioni Meteo</h1>
+        <p>
+        <h3>INSERISCI LA CITTA' : :</h3> <input type="text" id="localita"><br><br><br><button id="btn">Cerca</button>
+        </p>
+        <p id="ris">
+
+        </p>
+
+        <script>
+
+            const btn = document.querySelector("#btn")
+            const localita = document.querySelector("#localita")
+            const ris = document.querySelector("#ris")
+
+            btn.addEventListener("click", () => {
+                let url = `http://api.weatherapi.com/v1/current.json?key=28d82a89cfc543caa48135704231710&q=${localita.value.trim().toLocaleLowerCase()}&day=7`
+                fetch(url)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        console.log(data)
+                        ris.innerHTML = data.current.condition.text
+                        ris.innerHTML += ` <img src="${data.current.condition.icon.replace("//cdn.weatherapi.com", "img/")}">`
+                    })
+            })
+
+        </script>
+    </div>
+
+</body>
+
+</html>
